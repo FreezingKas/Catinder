@@ -9,6 +9,10 @@ const RIGHT = 1;
 
 export default class App extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {card1: cats[0], card2: cats[1],card3: cats[2]}
+    }
 
     card1Swiped(swipeSide) {
 
@@ -27,7 +31,11 @@ export default class App extends React.Component {
         } else if (swipeSide == RIGHT) {
             console.log('CARD 2 LIKE')
         }
-
+        
+        var i = Math.floor(Math.random()*cats.length);
+        this.setState({card1: cats[i]});
+        
+        
     }
 
     card3Swiped(swipeSide) {
@@ -38,12 +46,17 @@ export default class App extends React.Component {
             console.log('CARD 3 LIKE')
         }
 
+        
+
+        
+
     }
 
     render() {
         return (
             <View style={{ flex: 1 }}>
-
+                
+                <Text style={{marginTop:20}}>{this.state.i}</Text>
                 {/* Interface de swipe */}
                 <CardStack
                     style={styles.content}
@@ -53,17 +66,19 @@ export default class App extends React.Component {
                     }}
                     onSwipedTop={() => console.log('Swipé au TOP')}
                 >
-                    <Card style={[styles.card, styles.card1]} onSwipedLeft={() => this.card1Swiped(LEFT)} onSwipedRight={() => this.card1Swiped(RIGHT)}>
-                        <Image style={{width:"100%", height: "100%"}} source={{uri: cats[2].image}}/>
-                        <Text style={styles.label}>{cats[2].name}</Text>
+                    <Card style={[styles.card, styles.card1]} onSwipedLeft={() => this.card1Swiped(LEFT)} onSwipedRight={() => this.card1Swiped(RIGHT)} key={this.state.card1.key}>
+                        <Image style={{width:"100%", height: "100%"}} source={{uri: this.state.card1.image}}/>
+                        <Text style={styles.label}>{this.state.card1.name}</Text>
                     </Card>
                     
-                    <Card style={[styles.card, styles.card2]} onSwipedLeft={() => this.card2Swiped(LEFT)} onSwipedRight={() => this.card2Swiped(RIGHT)}>
-                        <Text style={styles.label}>B</Text>
+                    <Card style={[styles.card, styles.card2]} onSwipedLeft={() => this.card2Swiped(LEFT)} onSwipedRight={() => this.card2Swiped(RIGHT)} key={this.state.card2.key}>
+                    <Image style={{width:"100%", height: "100%"}} source={{uri: this.state.card2.image}}/>
+                        <Text style={styles.label}>{this.state.card2.name}</Text>
                     </Card>
                     
-                    <Card style={[styles.card, styles.card3]} onSwipedLeft={() => this.card3Swiped(LEFT)} onSwipedRight={() => this.card3Swiped(RIGHT)}>
-                        <Text style={styles.label}>C</Text>
+                    <Card style={[styles.card, styles.card3]} onSwipedLeft={() => this.card3Swiped(LEFT)} onSwipedRight={() => this.card3Swiped(RIGHT)} key={this.state.card3.key}>
+                    <Image style={{width:"100%", height: "100%"}} source={{uri: this.state.card3.image}}/>
+                        <Text style={styles.label}>{this.state.card3.name}</Text>
                     </Card>
                 </CardStack>
 
@@ -108,7 +123,7 @@ const styles = StyleSheet.create({
     },
     card: {
         width: 320,
-        height: 470,
+        height: 500,
         backgroundColor: '#FE474C',
         borderRadius: 15,
         shadowColor: 'rgba(0,0,0,0.5)',
@@ -120,7 +135,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         // Pour avoir le border radius sur
-        overflow: 'hidden'
+        overflow: 'hidden',
+        elevation: 14,
+        marginTop: 30
         
     },
     card1: {
@@ -157,39 +174,24 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
     },
     button: {
-        shadowColor: 'rgba(0,0,0,0.3)',
-        shadowOffset: {
-            width: 0,
-            height: 1
-        },
-        shadowOpacity: 0.5,
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
         zIndex: 0,
+        elevation: 14,
+        
     },
     orange: {
-        width: 55,
-        height: 55,
-        borderWidth: 6,
-        borderColor: 'rgb(246,190,66)',
-        borderRadius: 55,
-        marginTop: -15
-    },
-    green: {
-        width: 75,
-        height: 75,
-        backgroundColor: '#fff',
-        borderRadius: 75,
-        borderWidth: 6,
-        borderColor: '#01df8a',
+        height: 40, 
+        width: 40,
+        borderRadius: 25,
+        marginTop: 10
     },
     red: {
-        width: 75,
-        height: 75,
-        backgroundColor: '#fff',
-        borderRadius: 75,
-        borderWidth: 6,
-        borderColor: '#fd267d',
+        borderRadius: 128
+    },
+    green: {
+        borderRadius: 128
     }
+
 });
